@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 
-const BusList = () => {
+const Contact = () => {
   return (
     <View>
       <Text>Welcome to Home</Text>
     </View>
   );
 };
-export default BusList;
+export default Contact;
