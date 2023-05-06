@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
 import {Text, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
       <PageImage
         image={require('../images/road-map.png')}
-        text="Bus List" />
+        text='Bus List'
+        screen='BusList' />
       <PageImage
         image={require('../images/direction.png')}
-        text="Navigator" />
+        text='Navigator'
+        screen='Navigator' />
       <PageImage
         image={require('../images/map.png')}
-        text="Search" />
+        text='Search'
+        screen='Search' />
       <PageImage
         image={require('../images/operator.png')}
-        text="Contact Us" />
+        text='Contact Us'
+        screen='Contact' />
       <View style={styles.copyRightView}>
         <Text style={styles.copyRightText}>Copyright (c) by Minh Le</Text>
       </View>
@@ -23,10 +28,16 @@ const Home = () => {
   );
 };
 
-const PageImage = props => {
+const PageImage = (props) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.homeIconContainer}>
-      <TouchableOpacity style={styles.homeIconView}>
+      <TouchableOpacity 
+        style={styles.homeIconView}
+        onPress={() => {
+          navigation.navigate(props.screen);
+        }}>
         <Image
           style={styles.functionIcon} 
           source={props.image}/>
