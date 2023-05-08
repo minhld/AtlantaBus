@@ -1,11 +1,25 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 
 const Flash = () => {
   return (
-    <View>
-      <Text>Welcome to Flash</Text>
+    <View style={styles.container}>
+      <Image style={styles.logoImage} source={require('../images/marta.png')} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logoImage: {
+    width: '80%',
+    height: 48,
+  }
+});
+
 export default Flash;

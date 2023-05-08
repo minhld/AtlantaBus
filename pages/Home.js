@@ -1,21 +1,36 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {Text, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import * as DbUtils from '../components/DbUtils';
 
-const Home = () => {
+const Home = ({navigation}) => {
+  useEffect(() => {
+    // write your code here, it's like componentWillMount
+    DbUtils.loadDb();
+  }, []);
+    
   return (
     <View style={styles.container}>
       <PageImage
         image={require('../images/road-map.png')}
-        text="Bus List" />
+        text='Bus List'
+        screen='BusList' />
       <PageImage
         image={require('../images/direction.png')}
-        text="Navigator" />
+        text='Navigator'
+        screen='Navigator' />
       <PageImage
         image={require('../images/map.png')}
-        text="Search" />
+        text='Search'
+        screen='Search' />
       <PageImage
         image={require('../images/operator.png')}
-        text="Contact Us" />
+        text='Contact Us'
+        screen='Contact' />
+      <PageImage
+        image={require('../images/settings.png')}
+        text='Settings'
+        screen='Settings' />
       <View style={styles.copyRightView}>
         <Text style={styles.copyRightText}>Copyright (c) by Minh Le</Text>
       </View>
@@ -23,10 +38,16 @@ const Home = () => {
   );
 };
 
-const PageImage = props => {
+const PageImage = (props) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.homeIconContainer}>
-      <TouchableOpacity style={styles.homeIconView}>
+      <TouchableOpacity 
+        style={styles.homeIconView}
+        onPress={() => {
+          navigation.navigate(props.screen);
+        }}>
         <Image
           style={styles.functionIcon} 
           source={props.image}/>
