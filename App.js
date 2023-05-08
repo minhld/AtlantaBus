@@ -8,6 +8,7 @@ import BusList from './pages/BusList';
 import Navigator from './pages/Navigator';
 import Search from './pages/Search';
 import Contact from './pages/Contact';
+import Settings from './pages/Settings';
 import CustomSidebarMenu from './components/CustomSidebarMenu';
 
 const Drawer = createDrawerNavigator();
@@ -81,6 +82,16 @@ const App = () => {
             title: 'Contact Us',
             drawerIcon: ({focused, size}) => (
               <Icon name='call' color='#3262a8' />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name='Settings'
+          component={Settings}
+          options={{
+            title: 'Settings',
+            drawerIcon: ({focused, size}) => (
+              <Icon name='settings' color='#3262a8' />
             ),
           }}
         />

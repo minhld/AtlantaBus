@@ -1,8 +1,14 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {Text, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as DbUtils from '../components/DbUtils';
 
 const Home = ({navigation}) => {
+  useEffect(() => {
+    // write your code here, it's like componentWillMount
+    DbUtils.loadDb();
+  }, []);
+    
   return (
     <View style={styles.container}>
       <PageImage
@@ -21,6 +27,10 @@ const Home = ({navigation}) => {
         image={require('../images/operator.png')}
         text='Contact Us'
         screen='Contact' />
+      <PageImage
+        image={require('../images/settings.png')}
+        text='Settings'
+        screen='Settings' />
       <View style={styles.copyRightView}>
         <Text style={styles.copyRightText}>Copyright (c) by Minh Le</Text>
       </View>
