@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { ProgressBar, Colors } from 'react-native-paper';
+import RNFS from 'react-native-fs';
+
 import * as DbUtils from '../components/DbUtils';
+import * as Constants from '../components/Constants';
 
 const Settings = () => {
   const [fileExist, setFileExist] = useState(false); 
@@ -9,45 +12,51 @@ const Settings = () => {
   const [downloadPercentage, setDownloadPercentage] = useState(0); 
   const [isDownloading, setIsDownloading] = useState(false);
 
+  useEffect(async () => {
+    const isFileDownloaded = await Constants.isFileDownloaded();
+    setFileExist(isFileDownloaded);
+  }, []);
+
   const downloadFile = async () => {
     setIsDownloading(true);
-    const dbPath = Constants.getDbPath(); 
-    // check and create sqlite folder
-    if (!(await FileSystem.getInfoAsync(dbPath)).exists) {
-      console.log('creating SQLite folder ');
-      await FileSystem.makeDirectoryAsync(dbPath);
+    const downloadPath = Constants.getDownloadPath(); 
+    if (!(await RNFS.exists(downloadPath))) {
+      console.log('creating download folder...');
+      await RNFS.mkdir(downloadPath);
     }
-    const downloadFilePath = Constants.getDbFilePath();
-    const downloadResumable = FileSystem.createDownloadResumable(
-      Constants.DB_URL,
-      downloadFilePath,
-      {},
-      updateProgress
-    );
-
-    try {
-      const { uri } = await downloadResumable.downloadAsync();
-      console.log("Finished downloading ", uri);
-    } catch (e) {
-      console.error(e);
+    if (await Constants.isFileDownloaded()) {
+      await Constants.downloadFile((data) => {
+        setDownloadPercentage(data.bytesWritten / data.contentLength);
+      }, 
+      (res) => {
+        if (res && res.statusCode === 200 && res.bytesWritten > 0) {
+          Constants.unzipFile();
+          setFileExist(true);
+        } else {
+          setFileExist(false);
+        }
+      });
+    } else {
+      console.log('file exist');
+      Constants.unzipFile();
     }
     setIsDownloading(false);
-  };
-  
-  const updateProgress = downloadProgress => {
-    const progress = downloadProgress.totalBytesWritten / downloadProgress.totalBytesExpectedToWrite;
-    console.log(JSON.stringify(downloadProgress));
-    setDownloadPercentage(progress);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.downloadView}>
-        <Text>Database has been loaded</Text>
+        {fileExist && 
+          <View>
+            <Text>Data file has been downloaded</Text>
+            <Text>{Constants.getDownloadFile()}</Text>
+          </View>
+        }
+        {!fileExist && <Text>Data file missing</Text>}
         <ProgressBar 
-          progress={0.3} 
+          progress={downloadPercentage} 
           color={'#3262a8'} 
-          visible={true}
+          visible={isDownloading}
           style={styles.downloadProgress} />
       </View>
       <TouchableOpacity
