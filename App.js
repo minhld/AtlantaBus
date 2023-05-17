@@ -8,8 +8,9 @@ import BusList from './pages/BusList';
 import Navigator from './pages/Navigator';
 import Search from './pages/Search';
 import Contact from './pages/Contact';
-import Settings from './pages/Settings';
+// import Settings from './pages/Settings';
 import CustomSidebarMenu from './components/CustomSidebarMenu';
+import Settings2 from './pages/Settings2';
 
 const Drawer = createDrawerNavigator();
 
@@ -87,7 +88,7 @@ const App = () => {
         />
         <Drawer.Screen
           name='Settings'
-          component={Settings}
+          component={Settings2}
           options={{
             title: 'Settings',
             drawerIcon: ({focused, size}) => (
