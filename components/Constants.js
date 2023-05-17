@@ -18,23 +18,18 @@ export const isFileDownloaded = async () => {
   return await RNFS.exists(downloadFile);
 }
 
-export const isFileExist = async (filePath) => {
-  return await RNFS.exists(filePath);
-}
-
 export const unzipFile = async () => {
   const targetPath = getDownloadPath();
   const sourcePath = getDownloadFile();
 
-  unzip(sourcePath, targetPath)
-  .then((path) => {
-    console.log('unzip completed', path);
-    const routeFilePath = path + '/routes.txt'; 
-    RNFS.exists(routeFilePath).then(exist => {
+  unzip(sourcePath, targetPath).then((path) => {
+    const routeFilePath = path + '/stop_times.txt'; 
+    RNFS.exists(routeFilePath).then(async exist => {
       if (exist) {
-        console.log('file ', routeFilePath, 'created');
+        const content = await RNFS.readFile(routeFilePath, 'utf8');
+        console.log(content);
       } else {
-        console.error('file ', routeFilePath, 'failed to create');
+        console.error('unzip failed, file ', routeFilePath, 'not created');
       }
     });
   })

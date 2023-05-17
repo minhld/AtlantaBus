@@ -19,7 +19,6 @@ const Settings = () => {
     if(isFocused){ 
       console.log('goto settings screen');
       Constants.isFileDownloaded().then(downloaded => {
-        console.log(downloaded);
         setFileExist(downloaded);
       });
     }
