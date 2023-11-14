@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {Text, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import * as DbUtils from '../components/DbUtils';
+// import * as DbUtils from '../components/DbUtils';
 
 const Home = ({navigation}) => {
   useEffect(() => {
     // write your code here, it's like componentWillMount
-    DbUtils.loadDb();
+    // DbUtils.loadDb();
   }, []);
     
   return (
