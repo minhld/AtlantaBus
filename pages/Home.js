@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   homeIconView: {
-    width: 80,
-    height: 100,
+    width: 65,
+    height: 80,
     textAlign: 'center'
   },
   functionIcon: {
-    width: 80,
-    height: 80,
+    width: 65,
+    height: 65,
     // tintColor: '#3262a8',
     marginBottom: 10
   },
