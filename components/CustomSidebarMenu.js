@@ -14,8 +14,6 @@ import {
 } from '@react-navigation/drawer';
 
 const CustomSidebarMenu = props => {
-  const BASE_PATH =
-        'https://www.nicesnippets.com/image/nice-logo.png';
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.logoImage}>

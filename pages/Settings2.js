@@ -6,7 +6,7 @@ const Settings2 = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if(isFocused){ 
+    if(isFocused) { 
       console.log('goto settings screen');
     }
   }, [isFocused]);
